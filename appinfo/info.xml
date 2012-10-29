@@ -4,7 +4,7 @@
 	<name>Files Meta</name>
 	<licence>AGPL</licence>
 	<author>Arman Khalatyan</author>
-	<require>4</require>
+	<require>5</require>
 	<shipped>false</shipped>
 	<description>Meta data per file</description>
 </info>
