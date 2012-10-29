@@ -1,0 +1,48 @@
+#history {
+    margin: 2em 2em 0;
+}
+
+#feedback-messages h3 {
+    font-size: 1.3em;
+    font-style: italic;
+}
+
+.success {
+    color: green;
+}
+
+.failure {
+    color: red;
+}
+
+
+
+#metadropdown { display:block;  position:absolute; z-index:100; width:20em; right:0; margin-right:7em; background:#eee; padding:1em;
+                -moz-box-shadow:0 1px 1px #777; -webkit-box-shadow:0 1px 1px #777; box-shadow:0 1px 1px #777;
+                -moz-border-radius-bottomleft:1em; -webkit-border-bottom-left-radius:1em; border-bottom-left-radius:1em;
+                -moz-border-radius-bottomright:1em; -webkit-border-bottom-right-radius:1em; border-bottom-right-radius:1em; }
+
+
+.editable {
+    overflow: hidden;
+    white-space: nowrap;
+    color: #333;
+  /*  margin: 100px auto;*/
+    cursor: pointer;
+    border: 1px solid #333;
+   /* width: 200px;
+    height: 20px;*/
+    background: #FFF;
+    padding: 5px;
+    text-align: left;
+}
+
+ .wordwrap { 
+   white-space: pre-wrap;      /* CSS3 */   
+   white-space: -moz-pre-wrap; /* Firefox */    
+   white-space: -pre-wrap;     /* Opera <7 */   
+   white-space: -o-pre-wrap;   /* Opera 7 */    
+   word-wrap: break-word;      /* IE */
+}
+
+.ui-icon-closethick { background-image: url("%appswebroot%/apps/files_meta/img/arrow-close.png"); }
