@@ -1,5 +1,6 @@
 files_meta
 ==========
+WARNING: This version works only with OC 4.0.x
 
 File Metadata App for Owncloud.
 Owncloud plugin: Meta data per file.
