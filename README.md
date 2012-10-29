@@ -9,25 +9,26 @@ The database is designed as key/value storage where we have following columns:
 item,namespace,key,value
 Actually the meta_data can be any data, one can extend files_meta plugin to store metadata not only for files.
 
+### Short Decription
+### files_meta
+an app dedicated  to store additional meta data per file.
+#### The road map is following:
+* add **"i"** in action stack
+* on click show description
+* show owner and shared information, last edit
+* some additional text
+* in some point add search hook from OC5.x
 
 
-change log:
+
+# change log:
 10/29/2012
 Migratged from gitorius to github
 
 
-change log:
 07/23/2012
 Share folder handled: meta info is readonly
 Additional information is show now only sharing and permission.
 version 0.2 is released.
 
-
-files_meta
-an app dedicated  to store additional meta data per file.
-The road map is following:
-1) add "i" in action stack
-2) on click show description
-2.1) show owner and shared information, last edit
-2.3) some additional text
 
