@@ -13,5 +13,3 @@ $source = strip_tags( $source );
 $description = OC_FilesMeta::getDescription($source);
 
 OCP\JSON::encodedPrint($description);
-
-?>

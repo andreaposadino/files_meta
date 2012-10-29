@@ -16,4 +16,3 @@ $d = strip_tags( $d );
 OC_FilesMeta::setByKey($realpath, 'description', $d);
 
 OCP\JSON::success();
-?>

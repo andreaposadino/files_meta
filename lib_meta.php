@@ -37,24 +37,25 @@ class OC_FilesMeta {
         return (strcmp(substr($haystack, 0, strlen($needle)), $needle) === 0);
     }
 
+    /**
+     *  An Utility function which returns folder or file 
+     * return string ;
+     */
+    protected static function getItemType($source) {
+        $itemtype = OC_Filesystem::is_file($source) ? 'file' : 'folder';
+        return $itemtype;
+    }
+
     public static function getDescription($source) {
-        
+        $source = OC_Filesystem::normalizePath($source);
         $realpath = '/' . OCP\USER::getUser() . '/files' . $source;
-        
+        $strippedsource = '';
         $sharedstr = '/Shared';
         if (OC_FilesMeta::isStartingWith($source, $sharedstr)) {
             // get the real file name from shares.
             $strippedsource = substr($source, strlen($sharedstr));
-            $realpath=OC_Share::getSource($realpath);
+            $realpath = OCP\Share::getItemSharedWithBySource('', $realpath);
         }
-        
-        //var_dump();
-        //var_dump($realpath);
-        //var_dump($strippedsource);
-        
-       
-
-
 
 
         $isexist = OC_Filesystem::file_exists($source);
@@ -63,22 +64,22 @@ class OC_FilesMeta {
 
         $mimetype = OC_Filesystem::getMimeType($source);
 
-
         $shareinfo = 'None';
 
         $w = array(false => '-', true => 'w');
         $r = array(false => '-', true => 'r');
-
-        $sharei = OC_Share::getMySharedItem($realpath);
-        //var_dump($sharei);
-
+        //var_dump($realpath);
+       // $sharei = OCP\Share::getItemSharedWith(self::getItemType($source), $realpath);
+        $sharei = OCP\Share::getItemsShared(self::getItemType($source), $source);
+        var_dump(OCP\Share::getItemsShared(self::getItemType($source), OCP\Share::FORMAT_STATUSES));
         if ($sharei) {
             $shareinfo = '<ul>';
-            foreach ($sharei as $k => $v) {
+            //foreach ($sharei as $k => $v) 
+                {
                 $wr = 'readonly';
-                if ($v['permissions'])
+                if ($sharei['permissions'])
                     $wr = 'can edit';
-                $shareinfo.='<li>' . $v['uid_shared_with'] . " <strong>" . $wr . '</strong></li>';
+                $shareinfo.='<li>' . 'uid_shared_with' . " <strong>" . $wr . '</strong></li>';
             }
             $shareinfo.='</ul>';
         }
@@ -120,10 +121,13 @@ class OC_FilesMeta {
     public static function setByKey($source, $key, $value) {
 
         $query = OCP\DB::prepare("DELETE FROM  *PREFIX*metadata WHERE `item`=?  ");
+        //      error_log("file_meta:" . $source);
+
         $query->execute(array($source));
 
         $query = OCP\DB::prepare("INSERT INTO  *PREFIX*metadata (`item`,`key`,`value`) VALUES(?,?,?) ");
         $query->execute(array($source, $key, $value));
+//        error_log("file_meta:" . $source . $key . $value);
     }
 
 }

@@ -1,6 +1,10 @@
 files_meta
 ==========
 
+#### WARNING: this require OC >4.5
+
+
+
 File Metadata App for Owncloud.
 Owncloud plugin: Meta data per file.
 This plugin is used to add Description on file item. 
