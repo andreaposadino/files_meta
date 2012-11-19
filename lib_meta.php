@@ -45,10 +45,19 @@ class OC_FilesMeta {
         $itemtype = OC_Filesystem::is_file($source) ? 'file' : 'folder';
         return $itemtype;
     }
+     /**
+     *  An Utility function which converts source to id of resource 
+     * return int ;
+     */
+    protected static function getSourceId($source) {
+      $itemtype = OC_FileCache::getId($source) ;
+        return $itemtype;
+    }
+    
 
     public static function getDescription($source) {
         $source = OC_Filesystem::normalizePath($source);
-        $realpath =  OCP\USER::getUser() . '/files' . $source;
+        $realpath =  "/".OCP\USER::getUser() . '/files' . $source;
         $strippedsource = '';
         $sharedstr = '/Shared';
         if (OC_FilesMeta::isStartingWith($source, $sharedstr)) {
@@ -68,22 +77,20 @@ class OC_FilesMeta {
 
         $w = array(false => '-', true => 'w');
         $r = array(false => '-', true => 'r');
-        error_log(print_r($realpath,1));
-       // $sharei = OCP\Share::getItemSharedWith(self::getItemType($source), $realpath);
-        $sharei = OCP\Share::getItemsShared(self::getItemType($source), $source);
-	// var_dump(OCP\Share::getItemsShared(self::getItemType($source), OCP\Share::FORMAT_STATUSES));
-	$t=print_r(OCP\Share::getItemSharedWithBySource(self::getItemType($source), $source),1);
-        $shareinfo.=$t;
+        //error_log(print_r($realpath,1));
+	//var_dump(self::getSourceId($source));
+	//die();
+       
+	//$sharei = OCP\Share::getItemsShared('file',OC_Share_Backend_File::FORMAT_SHARED_STORAGE );
+	$sharei=OCP\Share::getItemShared('file', self::getSourceId($source)) ;
+	
+	
+	
+	print_r( $sharei);
+	die(9);
+        
 	if ($sharei) {
-            $shareinfo = '<ul>';
-            //foreach ($sharei as $k => $v) 
-                {
-                $wr = 'readonly';
-                if ($sharei['permissions'])
-                    $wr = 'can edit';
-                //$shareinfo.=print_r($sharei,1)."<====> ".$t;
-            }
-            $shareinfo.='</ul>';
+            
         }
 
 
