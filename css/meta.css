@@ -45,4 +45,6 @@
    word-wrap: break-word;      /* IE */
 }
 
-.ui-icon-closethick { background-image: url("%appswebroot%/apps/files_meta/img/arrow-close.png"); }
+.ui-icon-triangle-e { background-image: url("%appswebroot%/files_meta/img/triangle-e.png"); }
+.ui-icon-triangle-s { background-image: url("%appswebroot%/files_meta/img/triangle-s.png"); }
+.ui-icon-save { background-image: url("%appswebroot%/files_meta/img/save.png"); }

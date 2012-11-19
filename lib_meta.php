@@ -48,7 +48,7 @@ class OC_FilesMeta {
 
     public static function getDescription($source) {
         $source = OC_Filesystem::normalizePath($source);
-        $realpath = '/' . OCP\USER::getUser() . '/files' . $source;
+        $realpath =  OCP\USER::getUser() . '/files' . $source;
         $strippedsource = '';
         $sharedstr = '/Shared';
         if (OC_FilesMeta::isStartingWith($source, $sharedstr)) {
@@ -68,18 +68,20 @@ class OC_FilesMeta {
 
         $w = array(false => '-', true => 'w');
         $r = array(false => '-', true => 'r');
-        //var_dump($realpath);
+        error_log(print_r($realpath,1));
        // $sharei = OCP\Share::getItemSharedWith(self::getItemType($source), $realpath);
         $sharei = OCP\Share::getItemsShared(self::getItemType($source), $source);
-        var_dump(OCP\Share::getItemsShared(self::getItemType($source), OCP\Share::FORMAT_STATUSES));
-        if ($sharei) {
+	// var_dump(OCP\Share::getItemsShared(self::getItemType($source), OCP\Share::FORMAT_STATUSES));
+	$t=print_r(OCP\Share::getItemSharedWithBySource(self::getItemType($source), $source),1);
+        $shareinfo.=$t;
+	if ($sharei) {
             $shareinfo = '<ul>';
             //foreach ($sharei as $k => $v) 
                 {
                 $wr = 'readonly';
                 if ($sharei['permissions'])
                     $wr = 'can edit';
-                $shareinfo.='<li>' . 'uid_shared_with' . " <strong>" . $wr . '</strong></li>';
+                //$shareinfo.=print_r($sharei,1)."<====> ".$t;
             }
             $shareinfo.='</ul>';
         }
@@ -90,7 +92,6 @@ class OC_FilesMeta {
         $fsize = OC_Helper::humanFileSize(OC_Filesystem::filesize($source));
 
         $description = OC_FilesMeta::getByKey($realpath, 'description');
-
 
 
         $metaSorted = array('status' => 'success',
@@ -106,12 +107,13 @@ class OC_FilesMeta {
 
     public static function getByKey($source, $key, $default = 'none') {
         $result = '';
+	$source = OC_Filesystem::normalizePath($source);
         $query = OCP\DB::prepare("SELECT value FROM *PREFIX*metadata  WHERE `item`=?  AND `key`=? limit 1 ");
-
+	
         $result = $query->execute(array($source, $key))->fetchAll();
 
         if (count($result) > 0) {
-            //var_dump($result);
+        
             return $result[0]['value'];
         } else {
             return $default;
@@ -119,15 +121,15 @@ class OC_FilesMeta {
     }
 
     public static function setByKey($source, $key, $value) {
-
-        $query = OCP\DB::prepare("DELETE FROM  *PREFIX*metadata WHERE `item`=?  ");
+      $source = OC_Filesystem::normalizePath($source);
+      $query = OCP\DB::prepare("DELETE FROM  *PREFIX*metadata WHERE `item`=?  ");
         //      error_log("file_meta:" . $source);
 
         $query->execute(array($source));
 
         $query = OCP\DB::prepare("INSERT INTO  *PREFIX*metadata (`item`,`key`,`value`) VALUES(?,?,?) ");
         $query->execute(array($source, $key, $value));
-//        error_log("file_meta:" . $source . $key . $value);
+        //error_log("file_meta:S::" . $source .":: key". $key .":: value::". $value);
     }
 
 }

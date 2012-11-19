@@ -67,7 +67,7 @@ OC.Meta={
         html += 'Description:<br />';//<span id="spdescription" style="width:65%;" >'+OC.Meta.description+'</span>';
         html += '<div id="editable" class="editable wordwrap">'+OC.Meta.description+
         '</div><br /><span class="metasave" title="save">save</span><br />';
-        html += '<span id="more" class="more ui-icon ui-icon-circle-triangle-e"></span>';
+        html += '<span id="more" class="more ui-icon  ui-icon-triangle-e"></span>';
         html += '<div id="slider" style="display:none">';
         html += '<div >';
         
@@ -106,9 +106,9 @@ OC.Meta={
         }
         
         $(".metasave").button({
-            icons: {
-                primary: "ui-icon-disk"
-            }
+       /*     icons: {
+                primary: "ui-icon-save"
+            }*/
         });
         $(".metasave").button('disable');
         
@@ -154,7 +154,7 @@ OC.Meta={
 $(document).ready(function(){
     if (typeof FileActions !== 'undefined') {
         // Add history button to files/index.php
-        FileActions.register('all','Meta',function(){
+        FileActions.register('all','Meta',OC.PERMISSION_UPDATE,function(){
             if (scanFiles.scanning) {
                 return;
             } 
@@ -255,10 +255,10 @@ $(document).ready(function(){
             if ($("#slider").is(":hidden")) {
                 $("#slider").slideDown("slow");
                 // $("#more").text('less -');
-                $("#more").removeClass("ui-icon-circle-triangle-e").addClass("ui-icon-circle-triangle-s");
+                $("#more").removeClass("ui-icon-triangle-e").addClass("ui-icon-triangle-s");
             } else {
                 $("#slider").hide();
-                $("#more").removeClass("ui-icon-circle-triangle-s").addClass("ui-icon-circle-triangle-e");
+                $("#more").removeClass("ui-icon-triangle-s").addClass("ui-icon-triangle-e");
             }
         //});
         }
